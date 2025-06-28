@@ -16,9 +16,12 @@ export default function MatchList({ token, myId }) {
       <h3>내 매칭 목록</h3>
       {matches.length === 0 && <div>매칭 내역이 없습니다.</div>}
       <ul>
-        {matches.map(m => (
+        {matches.map((m) => (
           <li key={m.id} style={{ marginBottom: 8 }}>
-            <span>멘토: {m.mentor_id} / 멘티: {m.mentee_id}</span> <span style={{ color: '#888' }}>상태: {m.status}</span>
+            <span>
+              멘토: {m.mentor_id} / 멘티: {m.mentee_id}
+            </span>{' '}
+            <span style={{ color: '#888' }}>상태: {m.status}</span>
           </li>
         ))}
       </ul>

@@ -4,6 +4,7 @@ import Signup from './Signup';
 import MentorList from './MentorList';
 import MatchList from './MatchList';
 import { getProfile } from './api';
+import MentorMatchRequests from './MentorMatchRequests';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -27,12 +28,22 @@ function App() {
         {showSignup ? (
           <>
             <Signup onSignup={() => setShowSignup(false)} />
-            <button onClick={() => setShowSignup(false)} style={{ width: '100%' }}>로그인으로 돌아가기</button>
+            <button
+              onClick={() => setShowSignup(false)}
+              style={{ width: '100%' }}
+            >
+              로그인으로 돌아가기
+            </button>
           </>
         ) : (
           <>
             <Login onLogin={handleLogin} />
-            <button onClick={() => setShowSignup(true)} style={{ width: '100%' }}>회원가입</button>
+            <button
+              onClick={() => setShowSignup(true)}
+              style={{ width: '100%' }}
+            >
+              회원가입
+            </button>
           </>
         )}
       </div>
@@ -49,8 +60,16 @@ function App() {
       {profile?.role === 'mentee' && (
         <MentorList token={token} myId={profile.id} />
       )}
+      {profile?.role === 'mentor' && <MentorMatchRequests token={token} />}
       <MatchList token={token} myId={profile.id} />
-      <button onClick={() => { setToken(null); setProfile(null); }}>로그아웃</button>
+      <button
+        onClick={() => {
+          setToken(null);
+          setProfile(null);
+        }}
+      >
+        로그아웃
+      </button>
     </div>
   );
 }

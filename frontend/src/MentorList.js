@@ -8,7 +8,9 @@ export default function MentorList({ token, myId, onMatch }) {
 
   useEffect(() => {
     getUsers()
-      .then(users => setMentors(users.filter(u => u.role === 'mentor' && u.id !== myId)))
+      .then((users) =>
+        setMentors(users.filter((u) => u.role === 'mentor' && u.id !== myId))
+      )
       .catch(() => setError('멘토 목록을 불러오지 못했습니다.'));
   }, [myId]);
 
@@ -29,11 +31,13 @@ export default function MentorList({ token, myId, onMatch }) {
       <h3>멘토 목록</h3>
       {mentors.length === 0 && <div>멘토가 없습니다.</div>}
       <ul>
-        {mentors.map(m => (
+        {mentors.map((m) => (
           <li key={m.id} style={{ marginBottom: 8 }}>
             <b>{m.name}</b> <span style={{ color: '#888' }}>@{m.username}</span>
             <div style={{ fontSize: 13, color: '#555' }}>{m.bio}</div>
-            <button onClick={() => handleMatch(m.id)} style={{ marginTop: 4 }}>매칭 신청</button>
+            <button onClick={() => handleMatch(m.id)} style={{ marginTop: 4 }}>
+              매칭 신청
+            </button>
           </li>
         ))}
       </ul>
