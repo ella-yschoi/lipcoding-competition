@@ -1,3 +1,18 @@
+# 매칭 관리 API (멘토용)
+from . import match_manage
+# 멘토가 받은 매칭 신청 목록 (대기중)
+@app.get("/mentor/match-requests/", response_model=list[schemas.MatchOut])
+def get_pending_requests(current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != 'mentor':
+        raise HTTPException(status_code=403, detail="멘토만 접근 가능합니다.")
+    return match_manage.get_pending_requests_for_mentor(db, mentor_id=current_user.id)
+
+# 멘토가 매칭 신청 수락/거절
+@app.post("/mentor/match-requests/{match_id}/status", response_model=schemas.MatchOut)
+def update_match_status(match_id: int, status: str, current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != 'mentor':
+        raise HTTPException(status_code=403, detail="멘토만 접근 가능합니다.")
+    return match_manage.update_match_status(db, match_id=match_id, mentor_id=current_user.id, status=status)
 # 매칭 관련 API
 from . import match_crud
 # 매칭 생성 (멘티가 멘토에게 신청)
