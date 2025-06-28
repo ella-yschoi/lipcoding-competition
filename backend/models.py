@@ -13,6 +13,8 @@ class User(Base):
     role = Column(String, nullable=False)  # 'mentor' 또는 'mentee'
     name = Column(String, nullable=False)
     bio = Column(Text)
+    image = Column(String, nullable=True)  # 프로필 이미지 파일명
+    skills = Column(String, nullable=True)  # 쉼표로 구분된 기술스택
 
 class Match(Base):
     __tablename__ = "matches"
@@ -21,6 +23,7 @@ class Match(Base):
     mentee_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     status = Column(String, default="pending")  # pending, accepted, rejected
+    message = Column(Text, nullable=True)  # 매칭 요청 메시지
 
     mentor = relationship("User", foreign_keys=[mentor_id])
     mentee = relationship("User", foreign_keys=[mentee_id])

@@ -6,6 +6,8 @@ class UserBase(BaseModel):
     name: str
     bio: Optional[str] = None
     role: str  # 'mentor' 또는 'mentee'
+    image: Optional[str] = None
+    skills: Optional[str] = None
 
 class UserCreate(UserBase):
     password: str
@@ -18,6 +20,7 @@ class UserOut(UserBase):
 class MatchBase(BaseModel):
     mentor_id: int
     mentee_id: int
+    message: Optional[str] = None
 
 class MatchCreate(MatchBase):
     pass
