@@ -29,3 +29,18 @@ ndef get_user_by_username(db: Session, username: str) -> Optional[models.User]:
 # 전체 사용자 목록
 ndef get_users(db: Session):
     return db.query(models.User).all()
+
+# 매칭 생성
+def create_match(db: Session, mentor_id: int, mentee_id: int):
+    match = models.Match(mentor_id=mentor_id, mentee_id=mentee_id)
+    db.add(match)
+    db.commit()
+    db.refresh(match)
+    return match
+
+# 내 매칭 목록
+def get_my_matches(db: Session, user_id: int, role: str):
+    if role == 'mentor':
+        return db.query(models.Match).filter(models.Match.mentor_id == user_id).all()
+    else:
+        return db.query(models.Match).filter(models.Match.mentee_id == user_id).all()
