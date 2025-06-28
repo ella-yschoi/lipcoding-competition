@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
+import MentorList from './MentorList';
+import MatchList from './MatchList';
 import { getProfile } from './api';
 
 function App() {
@@ -44,6 +46,10 @@ function App() {
         <b>{profile?.name}</b> ({profile?.role})
         <div style={{ color: '#555', fontSize: 14 }}>{profile?.bio}</div>
       </div>
+      {profile?.role === 'mentee' && (
+        <MentorList token={token} myId={profile.id} />
+      )}
+      <MatchList token={token} myId={profile.id} />
       <button onClick={() => { setToken(null); setProfile(null); }}>로그아웃</button>
     </div>
   );
